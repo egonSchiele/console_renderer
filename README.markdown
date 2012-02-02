@@ -4,18 +4,22 @@ Sometimes you want to read a Markdown document without having to render it to HT
 
 ConsoleRenderer is available:
 
-# As an executable:
+## As an executable
 
 	console_render [markdown doc]
 	echo '#hello' | console_render
 	cat [markdown doc] | console_render
 
-# As a gem:
+## Example
+
+	![console_renderer example](http://static.adit.io/console_renderer.png)
+
+## As a gem
 
 	require 'console_renderer'
 	m = Redcarpet::Markdown.new(ConsoleRenderer)
 	puts m.render("# Title \n para")
 
-# Install
+## Install
 
 	gem install console_renderer
