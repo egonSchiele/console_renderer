@@ -16,3 +16,6 @@ ConsoleRenderer is available:
 	m = Redcarpet::Markdown.new(ConsoleRenderer)
 	puts m.render("# Title \n para")
 
+# Install
+
+	gem install console_renderer
