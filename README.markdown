@@ -12,7 +12,7 @@ ConsoleRenderer is available:
 
 ## Example
 
-![console_renderer example](http://static.adit.io/console_renderer.png)
+![console_renderer example](http://static.adit.io/images/console_renderer.png)
 
 ## As a gem
 
