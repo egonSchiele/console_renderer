@@ -106,7 +106,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def image(link, title, alt_text)
-    ("<" + alt_text + ">").color(:green) + ("(image at: " + link + ")").color(:cyan)
+    ("<" + (alt_text || "") + ">").color(:green) + ("(image at: " + (link || "") + ")").color(:cyan)
   end
 
   def linebreak()
