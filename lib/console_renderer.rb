@@ -4,6 +4,7 @@ require 'syntax/convertors/html'
 
 class ConsoleRenderer < Redcarpet::Render::Base
 
+  @listitemid = 0
   def self.syntax_highlight(code, inline=true)
     tokenizer = Syntax.load "ruby"
 
@@ -15,13 +16,13 @@ class ConsoleRenderer < Redcarpet::Render::Base
         bkp = c_line
       tokenizer.tokenize( line ) do |token|
         case token.group.to_s
-        when "comment" then c_line = c_line + token.color("#6EE18F")
-        when "constant" then c_line = c_line + token.color("#3D3D79")
-        when "expr" then c_line = c_line + token.color(:white)
-        when "ident" then c_line = c_line + token.color("#AAAAAA")
-        when "keyword" then c_line = c_line + token.color("#FF73EC")
+        when "comment" then c_line = c_line + token.color(:green)
+        when "constant" then c_line = c_line + token.color(:blue)
+        when "expr" then c_line = c_line + token.color(:red)
+        when "ident" then c_line = c_line + token.color(:white)
+        when "keyword" then c_line = c_line + token.color(:yellow)
         when "normal" then c_line = c_line + token.color(:cyan)
-        when "number" then c_line = c_line + token.color("#FF6300")
+        when "number" then c_line = c_line + token.color(:red)
         when "punct" then c_line = c_line + token.color(:white)
         when "string" then c_line = c_line + token.color(:red)
         when "symbol" then c_line = c_line + token.color(:green)
@@ -41,11 +42,11 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def block_quote(quote)
-    ret = ""
+    ret = "\n"
     quote.split("\n").each do |line|
       ret += "|".color(:cyan) + line
     end
-    ret
+    ret + "\n"
   end
 
   def block_html(raw_html)
@@ -62,15 +63,22 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def hrule()
-    "___________________________".color(:yellow)
+    "___________________________\n".color(:yellow)
   end
 
   def list(contents, list_type)
+    @listitemid = 0
     contents
   end
 
   def list_item(text, list_type)
-    "    " + "-".color(:cyan) + " " + text
+    case list_type
+    when :unordered
+      "    " + "-".color(:cyan) + " " + text
+    when :ordered
+      @listitemid += 1
+      "    " + (@listitemid.to_s + ".").color(:cyan) + " " + text
+    end
   end
 
   def paragraph(text)
@@ -98,11 +106,11 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def double_emphasis(text)
-    text.underline.italic
+    text.bright
   end
 
   def emphasis(text)
-    text.italic
+    text.underline
   end
 
   def image(link, title, alt_text)
@@ -114,7 +122,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def link(link, title, content)
-    (title || "") + " " + ("<" + link + ">").color(:cyan)
+    (content || "") + " " + ("<#{link}#{title ? " :" + title : ''}>").color(:cyan)
   end
 
   def raw_html(raw_html)
@@ -122,7 +130,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def triple_emphasis(text)
-    text.bright.italic.underline
+    text.bright.underline
   end
 
   def strikethrough(text)
