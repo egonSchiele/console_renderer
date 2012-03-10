@@ -4,7 +4,7 @@ require 'syntax/convertors/html'
 
 class ConsoleRenderer < Redcarpet::Render::Base
 
-  @listitemid = 0
+  @@listitemid = 0
   def self.syntax_highlight(code, inline=true)
     tokenizer = Syntax.load "ruby"
 
@@ -67,7 +67,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def list(contents, list_type)
-    @listitemid = 0
+    @@listitemid = 0
     contents
   end
 
@@ -76,8 +76,8 @@ class ConsoleRenderer < Redcarpet::Render::Base
     when :unordered
       "    " + "-".color(:cyan) + " " + text
     when :ordered
-      @listitemid += 1
-      "    " + (@listitemid.to_s + ".").color(:cyan) + " " + text
+      @@listitemid += 1
+      "    " + (@@listitemid.to_s + ".").color(:cyan) + " " + text
     end
   end
 
