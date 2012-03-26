@@ -6,9 +6,9 @@ ConsoleRenderer is available:
 
 ## As an executable
 
-	console_render [markdown doc]
-	echo '#hello' | console_render
-	cat [markdown doc] | console_render
+	console_renderer [markdown doc]
+	echo '#hello' | console_renderer
+	cat [markdown doc] | console_renderer
 
 ## Example
 
