@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'console_renderer'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.date        = '2012-03-09'
   s.summary     = "A renderer for Redcarpet. Render Markdown to the command line."
   s.description = "A renderer for Redcarpet. Render Markdown to the command line!"
