@@ -44,7 +44,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   def block_quote(quote)
     ret = "\n"
     quote.split("\n").each do |line|
-      ret += "|".color(:cyan) + line
+      ret += "|".color(:cyan) + line + "\n"
     end
     ret + "\n"
   end

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'redcarpet'
-require 'console_renderer'
+require_relative 'console_renderer'
 
 m = Redcarpet::Markdown.new(ConsoleRenderer)
 puts m.render(ARGF.read)
