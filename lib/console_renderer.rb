@@ -1,44 +1,11 @@
 require 'redcarpet'
 require 'rainbow'
-require 'syntax/convertors/html'
 
 class ConsoleRenderer < Redcarpet::Render::Base
 
   @@listitemid = 0
-  def self.syntax_highlight(code, inline=true)
-    tokenizer = Syntax.load "ruby"
-
-    c_line = ""
-
-    code.split("\n").each do |line|
-      c_line += "    " unless inline
-      begin
-        bkp = c_line
-      tokenizer.tokenize( line ) do |token|
-        case token.group.to_s
-        when "comment" then c_line = c_line + Rainbow(token).color(:green)
-        when "constant" then c_line = c_line + Rainbow(token).color(:blue)
-        when "expr" then c_line = c_line + Rainbow(token).color(:red)
-        when "ident" then c_line = c_line + Rainbow(token).color(:white)
-        when "keyword" then c_line = c_line + Rainbow(token).color(:yellow)
-        when "normal" then c_line = c_line + Rainbow(token).color(:cyan)
-        when "number" then c_line = c_line + Rainbow(token).color(:red)
-        when "punct" then c_line = c_line + Rainbow(token).color(:white)
-        when "string" then c_line = c_line + Rainbow(token).color(:red)
-        when "symbol" then c_line = c_line + Rainbow(token).color(:green)
-        else c_line += token
-        end
-      end
-      rescue
-        c_line = bkp + line
-      end
-      c_line += "\n" unless inline
-    end
-    c_line
-  end    
-
   def block_code(code, language)
-    "\n" + (ConsoleRenderer.syntax_highlight(code, false)) + "\n"
+    "\n" + code + "\n"
   end
 
   def block_quote(quote)
@@ -102,7 +69,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def codespan(code)
-    ConsoleRenderer.syntax_highlight(code)
+    code
   end
 
   def double_emphasis(text)
