@@ -16,16 +16,16 @@ class ConsoleRenderer < Redcarpet::Render::Base
         bkp = c_line
       tokenizer.tokenize( line ) do |token|
         case token.group.to_s
-        when "comment" then c_line = c_line + token.color(:green)
-        when "constant" then c_line = c_line + token.color(:blue)
-        when "expr" then c_line = c_line + token.color(:red)
-        when "ident" then c_line = c_line + token.color(:white)
-        when "keyword" then c_line = c_line + token.color(:yellow)
-        when "normal" then c_line = c_line + token.color(:cyan)
-        when "number" then c_line = c_line + token.color(:red)
-        when "punct" then c_line = c_line + token.color(:white)
-        when "string" then c_line = c_line + token.color(:red)
-        when "symbol" then c_line = c_line + token.color(:green)
+        when "comment" then c_line = c_line + Rainbow(token).color(:green)
+        when "constant" then c_line = c_line + Rainbow(token).color(:blue)
+        when "expr" then c_line = c_line + Rainbow(token).color(:red)
+        when "ident" then c_line = c_line + Rainbow(token).color(:white)
+        when "keyword" then c_line = c_line + Rainbow(token).color(:yellow)
+        when "normal" then c_line = c_line + Rainbow(token).color(:cyan)
+        when "number" then c_line = c_line + Rainbow(token).color(:red)
+        when "punct" then c_line = c_line + Rainbow(token).color(:white)
+        when "string" then c_line = c_line + Rainbow(token).color(:red)
+        when "symbol" then c_line = c_line + Rainbow(token).color(:green)
         else c_line += token
         end
       end
@@ -44,7 +44,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   def block_quote(quote)
     ret = "\n"
     quote.split("\n").each do |line|
-      ret += "|".color(:cyan) + line + "\n"
+      ret += Rainbow("|").color(:cyan) + line + "\n"
     end
     ret + "\n"
   end
@@ -56,14 +56,14 @@ class ConsoleRenderer < Redcarpet::Render::Base
   def header(text, header_level)
     text = "\n" + text + "\n"
     if header_level == 1
-      text.bright.underline
+      Rainbow(text).bright.underline
     else
-      text.underline
+      Rainbow(text).underline
     end
   end
 
   def hrule()
-    "___________________________\n".color(:yellow)
+    Rainbow("___________________________\n").color(:yellow)
   end
 
   def list(contents, list_type)
@@ -74,10 +74,10 @@ class ConsoleRenderer < Redcarpet::Render::Base
   def list_item(text, list_type)
     case list_type
     when :unordered
-      "    " + "-".color(:cyan) + " " + text
+      "    " + Rainbow("-").color(:cyan) + " " + text
     when :ordered
       @@listitemid += 1
-      "    " + (@@listitemid.to_s + ".").color(:cyan) + " " + text
+      "    " + Rainbow(@@listitemid.to_s + ".").color(:cyan) + " " + text
     end
   end
 
@@ -98,7 +98,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def autolink(link, link_type)
-    link.color(:cyan)
+    Rainbow(link).color(:cyan)
   end
 
   def codespan(code)
@@ -106,15 +106,15 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def double_emphasis(text)
-    text.bright
+    Rainbow(text).bright
   end
 
   def emphasis(text)
-    text.underline
+    Rainbow(text).underline
   end
 
   def image(link, title, alt_text)
-    ("<" + (alt_text || "") + ">").color(:green) + ("(image at: " + (link || "") + ")").color(:cyan)
+    Rainbow("<" + (alt_text || "") + ">").color(:green) + Rainbow("(image at: " + (link || "") + ")").color(:cyan)
   end
 
   def linebreak()
@@ -122,7 +122,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def link(link, title, content)
-    (content || "") + " " + ("<#{link}#{title ? " :" + title : ''}>").color(:cyan)
+    (content || "") + " " + Rainbow("<#{link}#{title ? " :" + title : ''}>").color(:cyan)
   end
 
   def raw_html(raw_html)
@@ -130,7 +130,7 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
 
   def triple_emphasis(text)
-    text.bright.underline
+    Rainbow(text).bright.underline
   end
 
   def strikethrough(text)
@@ -138,8 +138,6 @@ class ConsoleRenderer < Redcarpet::Render::Base
   end
   
   def superscript(text)
-    ("^" + text).color(:red)
+    Rainbow("^" + text).color(:red)
   end
 end
-
-
