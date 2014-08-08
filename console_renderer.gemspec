@@ -11,5 +11,4 @@ Gem::Specification.new do |s|
   s.executables = "console_renderer"
   s.add_dependency("redcarpet")
   s.add_dependency("rainbow")
-  s.add_dependency("syntax")
 end
